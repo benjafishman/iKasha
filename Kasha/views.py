@@ -29,7 +29,7 @@ def index(request):
 			results = s1manager.getChumashRashi()
 			pp = pprint.PrettyPrinter(indent=4)
 			print("**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")
-			pp.pprint(results)
+			#pp.pprint(results)
 			form = GetText()
 			return render(request, 'Kasha/index.html', {'form':form, 'results':results, 'sefer':sefer, 'perek':perek})
 	else:

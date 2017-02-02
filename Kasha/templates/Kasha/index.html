@@ -29,7 +29,7 @@
                                   </div>
                                   </div>
 
-{% if form.errors %}
+                                    {% if form.errors %}
                                         {% for field in form %}
                                             {% for error in field.errors %}
                                                 <div class="alert alert-error">
@@ -46,30 +46,51 @@
                                   </br>
                                     {% bootstrap_button "Search" button_type="submit" button_class="btn-primary" %}
                                 </form>
+
                                 <div class="search-results">
+                                  <!-- <button id="hebrewBtn">Hebrew</button>
+                                   <button id="englishBtn">English</button> -->
+                                    <input type="button" value="English" class="btnLanguage" data-language="eng"  />
+                                    <input type="button" value="Both" class="btnLanguage" data-language="both" />
+                                   <input type="button" value="Hebrew" class="btnLanguage" data-language="heb"  />
+
                                   <h2>{{sefer}} {{perek}}</h2>
+
                                 {% if results %}
-                                {#{{results}}#}
-                                <div>
-                                  <ul>
-                                  {% for pasuk, verse in results.items %}
-                                        <li><b>{{ verse.he }} {{ pasuk }}</b>
+                                <table id="table" class="table table-striped">
+                                  <tbody>
+                                 {% for pasuk, verse in results.items %}
+                                              <tr>
+                                                <th scope="row">{{ pasuk }}</th>
+                                                <td class="engText">{{ verse.en | safe }} </td>
+                                                <td dir="rtl" class="hebText">{{ verse.he }} </td>
+                                              </tr>
+                                 <!--
+                                        <li><b></b>
                                           {% if verse.rashi.items %}
                                             {% for rashi, r in verse.rashi.items %}
                                             <div class='rashi'>
                                             <ol>
-                                              <div class='rashi-item'>
+                                              <div dir="rtl" class='rashi-item'>
                                               <li>{{ r.he | safe  }}</li>
                                             </div>
                                             </ol>
+                                            {% empty %}
+                                              <li>Sorry, no Rashis
                                             {% endfor %}
                                             </div>
                                             {% endif %}
-                                        </li>
+                                        </li>-->
                                   {% endfor %}
                                   </ul>
                                 </div>
+                                {% else %}
+                                <tr>
+                                <td></td>
+                              </tr>
                                 {% endif %}
+                                   </tbody>
+                                </table>
                               </div>
 
           </div>
@@ -114,5 +135,27 @@ var chumashPerakim = {
             document.getElementById("perek").innerHTML = perOptions;
         }
     }
+
+$(document).ready(function(){
+    $('.btnLanguage').click(function() {
+
+       language = $(this).data("language");
+
+       languages = ['eng', 'heb']
+
+       var diff = $(languages).not([language]).get()
+
+       console.log(diff);
+
+       if (diff.length == 2){
+        $('#table').find('.hebText, .engText').removeClass('hidden');
+       } else {
+
+       $('#table').find('.' + diff + 'Text').addClass('hidden');
+
+       $('#table').find('.' + language + 'Text').removeClass('hidden');
+       }
+    });
+});
 </script>
 {% endblock %}

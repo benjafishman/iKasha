@@ -77,9 +77,6 @@ class SefariaApiChumashRashiManager(object):
 						
 			pasukNum+=1
 
-		pp = pprint.PrettyPrinter(indent=4)
-		pp.pprint(chumash_rashi_dict)
-
 		return chumash_rashi_dict
 
 

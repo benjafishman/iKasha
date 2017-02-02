@@ -6,3 +6,7 @@ li {
 	background-color: #F9F9F7;
 	margin: 5px;
 }
+
+.hidden{
+      visibility: hidden;
+ }
