@@ -48,11 +48,10 @@
                                 </form>
 
                                 <div class="search-results">
-                                  <!-- <button id="hebrewBtn">Hebrew</button>
-                                   <button id="englishBtn">English</button> -->
-                                    <input type="button" value="English" class="btnLanguage" data-language="eng"  />
+
+                                    <input type="button" value="English" class="btnLanguage" data-language="eng" />
                                     <input type="button" value="Both" class="btnLanguage" data-language="both" />
-                                   <input type="button" value="Hebrew" class="btnLanguage" data-language="heb"  />
+                                   <input type="button" value="Hebrew" class="btnLanguage" data-language="heb" />
 
                                   <h2>{{sefer}} {{perek}}</h2>
 
@@ -61,33 +60,19 @@
                                   <tbody>
                                  {% for pasuk, verse in results.items %}
                                               <tr>
-                                                <th scope="row">{{ pasuk }}</th>
-                                                <td class="engText">{{ verse.en | safe }} </td>
-                                                <td dir="rtl" class="hebText">{{ verse.he }} </td>
+                                                <!--<th scope="row">{{ pasuk }}</th>-->
+                                                <td class="eng-text">{{ verse.en | safe }} </td>
+                                                <td dir="rtl" class="heb-text">{{ verse.he }} </td>
                                               </tr>
-                                 <!--
-                                        <li><b></b>
                                           {% if verse.rashi.items %}
                                             {% for rashi, r in verse.rashi.items %}
-                                            <div class='rashi'>
-                                            <ol>
-                                              <div dir="rtl" class='rashi-item'>
-                                              <li>{{ r.he | safe  }}</li>
-                                            </div>
-                                            </ol>
-                                            {% empty %}
-                                              <li>Sorry, no Rashis
-                                            {% endfor %}
-                                            </div>
+                                            <tr>
+                                              <td class="eng-rashi rashi-item eng-text">{{ r.en | safe  }}</td>
+                                              <td dir="rtl" class="rashi-item heb-text heb-rashi">{{ r.he | safe  }}</td>
+                                             </tr>
+                                            {% endfor %} 
                                             {% endif %}
-                                        </li>-->
                                   {% endfor %}
-                                  </ul>
-                                </div>
-                                {% else %}
-                                <tr>
-                                <td></td>
-                              </tr>
                                 {% endif %}
                                    </tbody>
                                 </table>
@@ -148,12 +133,12 @@ $(document).ready(function(){
        console.log(diff);
 
        if (diff.length == 2){
-        $('#table').find('.hebText, .engText').removeClass('hidden');
+        $('#table').find('.heb-text, .eng-text').removeClass('hidden');
        } else {
 
-       $('#table').find('.' + diff + 'Text').addClass('hidden');
+       $('#table').find('.' + diff + '-text').addClass('hidden');
 
-       $('#table').find('.' + language + 'Text').removeClass('hidden');
+       $('#table').find('.' + language + '-text').removeClass('hidden');
        }
     });
 });

@@ -6,7 +6,13 @@ li {
 	background-color: #F9F9F7;
 	margin: 5px;
 }
+.heb-rashi {
+	padding-right: 45px !important;
+}
 
+td .eng-rashi {
+	padding-left: 45px;
+}
 .hidden{
       visibility: hidden;
  }
