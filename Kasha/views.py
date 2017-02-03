@@ -14,7 +14,6 @@ from SefariaApi.sefaria_api_wrapper import SefariaApi
 def index(request):
 	if request.method == 'POST':
 		form = GetText(request.POST)
-		print("here")
 		if form.is_valid():
 			results = None
 			sefer = form.cleaned_data['sefer']
