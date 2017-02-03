@@ -1,18 +1,36 @@
+
+
 li {
 	list-style-type: none;
 }
 
+.table>tbody>tr>td {
+	border-top: none !important;
+}
+
+.pasuk-item {
+	background-color: #FFFFFF !important;
+}
+
 .rashi-item {
-	background-color: #F9F9F7;
+	background-color: #EDF1F5 !important;
 	margin: 5px;
+	font-size: 13px;
 }
 .heb-rashi {
 	padding-right: 45px !important;
 }
 
-td .eng-rashi {
-	padding-left: 45px;
+.eng-rashi {
+	padding-left: 45px !important;
 }
+
 .hidden{
       visibility: hidden;
  }
+
+.pasuk-num {
+	font-size: 16px;
+	font-weight: bold;
+	padding-right: 5px;
+}

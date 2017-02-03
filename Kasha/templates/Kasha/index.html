@@ -59,16 +59,16 @@
                                 <table id="table" class="table table-striped">
                                   <tbody>
                                  {% for pasuk, verse in results.items %}
-                                              <tr>
+                                              <tr class="pasuk-item">
                                                 <!--<th scope="row">{{ pasuk }}</th>-->
-                                                <td class="eng-text">{{ verse.en | safe }} </td>
+                                                <td class="eng-text"><span class="pasuk-num">{{ pasuk }}.</span>{{ verse.en | safe }} </td>
                                                 <td dir="rtl" class="heb-text">{{ verse.he }} </td>
                                               </tr>
                                           {% if verse.rashi.items %}
                                             {% for rashi, r in verse.rashi.items %}
-                                            <tr>
-                                              <td class="eng-rashi rashi-item eng-text">{{ r.en | safe  }}</td>
-                                              <td dir="rtl" class="rashi-item heb-text heb-rashi">{{ r.he | safe  }}</td>
+                                            <tr class="rashi-item">
+                                              <td class="eng-text eng-rashi ">{{ r.en | safe  }}</td>
+                                              <td dir="rtl" class="heb-text heb-rashi">{{ r.he | safe  }}</td>
                                              </tr>
                                             {% endfor %} 
                                             {% endif %}
