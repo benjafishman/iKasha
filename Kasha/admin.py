@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import Question
+from .models import Question, SourceQuestion
 
-admin.site.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+	fields = ['pub_date', 'question_text', 'en_verse_text','he_verse_text','book_source',]
+	list_display = ('question_text', 'pub_date')
+admin.site.register(Question, QuestionAdmin)
+
+
+
+class SourceQuestionAdmin(admin.ModelAdmin):
+	list_display = ['book_chapter_sentence']
+admin.site.register(SourceQuestion, SourceQuestionAdmin)
 

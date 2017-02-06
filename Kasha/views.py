@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import GetText
-from .models import Question
+from .models import Question, SourceQuestion
 
 import pprint
 import requests
@@ -37,10 +37,11 @@ def index(request):
 	return render(request, 'Kasha/index.html', {'form':form})
 	#return HttpResponse("Hello, world. You're at the Kasha index.")
 
-def detail(request, question_id):
-	print("here1")
-	question = get_object_or_404(Question, pk=question_id)
-	return render(request, 'Kasha/question.html')	
+def question_list(request, book, chapter, sentence):
+	book = book.lower()
+	bcs = book + "_" + chapter + "_" + sentence
+	questions = SourceQuestion.objects.filter(book_chapter_sentence=bcs)
+	return render(request, 'Kasha/questions_list.html', {'questions':questions, 'bcs':bcs})	
 
 
 

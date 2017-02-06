@@ -8,9 +8,11 @@ class Question(models.Model):
 	en_verse_text = models.TextField(null=True, max_length=500, blank=True)
 	book_source = models.CharField(null=True, max_length=500, blank=True)
 
-
-class Source_Questions_Listing(models.Model):
+	class Meta:
+		verbose_name = "Question"
+		verbose_name_plural = "Questions"
+class SourceQuestion(models.Model):
 	book_chapter_sentence = models.CharField(max_length=100)
-	questions = ArrayField(models.CharField(max_length=200), blank=True)
+	question = models.ForeignKey(Question)
 
 
