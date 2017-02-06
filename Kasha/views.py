@@ -11,27 +11,42 @@ import requests
 
 from SefariaApi.SefariaApiChumashRashiManager import SefariaApiChumashRashiManager
 from SefariaApi.sefaria_api_wrapper import SefariaApi
-# Create your views here.
+
 def index(request):
 	if request.method == 'POST':
 		form = GetText(request.POST)
 		if form.is_valid():
+			# Results = None properly clears any previous search results
 			results = None
+
+			# form data
 			sefer = form.cleaned_data['sefer']
 			perek = form.cleaned_data['perek']
+
+			# create the api request suffix
 			api_request_url = sefer + '.' + perek
-			# call sefaria api
+
+			# instantiate sefaria api
 			sefariaApi = SefariaApi()
-			#print(sefariaApi)
+
+			# make api request an return results
 			text = sefariaApi.getText(api_request_url)
+
+			# instantiate chumash manger 
 			s1manager = SefariaApiChumashRashiManager(text)
+			# return collated main text with rashi dictionary
+			# TODO: error checking
 			results = s1manager.getChumashRashi()
 
-			# get book question
+			# turn sefer form data to lower case for
 			sefer = sefer.lower()
+			# create sefer_perek string to query db for all questions with specified <sefer_perek>
 			sefer_perek = sefer + "_" + perek
+			# query DB for all q's with <sefer_perek>
 			questions = SourceQuestion.objects.filter(book_chapter_sentence__startswith=sefer_perek)
 			print(questions)
+
+
 			pp = pprint.PrettyPrinter(indent=4)
 			print("**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")
 			#pp.pprint(results)
