@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import GetText
+from .models import Question
 
 import pprint
 import requests
@@ -35,4 +36,15 @@ def index(request):
 		form = GetText()		
 	return render(request, 'Kasha/index.html', {'form':form})
 	#return HttpResponse("Hello, world. You're at the Kasha index.")
-	
+
+def detail(request, question_id):
+	print("here1")
+	question = get_object_or_404(Question, pk=question_id)
+	return render(request, 'Kasha/question.html')	
+
+
+
+
+
+
+
