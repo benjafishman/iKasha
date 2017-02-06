@@ -20,13 +20,18 @@ def index(request):
 			sefer = form.cleaned_data['sefer']
 			perek = form.cleaned_data['perek']
 			api_request_url = sefer + '.' + perek
-			
 			# call sefaria api
 			sefariaApi = SefariaApi()
 			#print(sefariaApi)
 			text = sefariaApi.getText(api_request_url)
 			s1manager = SefariaApiChumashRashiManager(text)
 			results = s1manager.getChumashRashi()
+
+			# get book question
+			sefer = sefer.lower()
+			sefer_perek = sefer + "_" + perek
+			questions = SourceQuestion.objects.filter(book_chapter_sentence__startswith=sefer_perek)
+			print(questions)
 			pp = pprint.PrettyPrinter(indent=4)
 			print("**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")
 			#pp.pprint(results)
@@ -43,7 +48,9 @@ def question_list(request, book, chapter, sentence):
 	questions = SourceQuestion.objects.filter(book_chapter_sentence=bcs)
 	return render(request, 'Kasha/questions_list.html', {'questions':questions, 'bcs':bcs})	
 
-
+def question_detail(request, question_id):
+	question = get_object_or_404(Question, pk=question_id)
+	return render(request, 'Kasha/question_detail.html', {'question':question})
 
 
 

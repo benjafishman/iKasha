@@ -6,7 +6,7 @@
 {% block content %}
 
 {% block header %}
-<link href="{% static 'question.css' %}" rel="stylesheet">
+<link href="{% static 'question_detail.css' %}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     {% endblock header %}
@@ -15,14 +15,11 @@
 <h2>{{bcs}}</h2>
                                 <table id="table" class="table table-striped">
                                   <tbody>
-                                 {% for q in questions %}
                                               <tr>
-                                                <td>{{ q.id }}</td>
-                                                <td><a href="{% url 'kasha:question_detail' q.id %}">{{ q.question.question_text }}</a></td>
+                                                <td>{{ question.id }}</td>
+                                                <td>{{ question.question_text }}</td>
+                                                <td>{{ question.pub_date }}</td>
                                               </tr>
-                                  {% empty %}
-                                  <li>Sorry, no questions yet...</li>
-                                {% endfor %}
                                    </tbody>
                                 </table>
 {% endblock content %}
