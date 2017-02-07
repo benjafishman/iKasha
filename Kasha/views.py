@@ -6,9 +6,7 @@ from .models import Question, SourceQuestion
 import pprint
 import requests
 
-
 #from <folder>.<filename> import <module>
-
 from SefariaApi.SefariaApiChumashRashiManager import SefariaApiChumashRashiManager
 from SefariaApi.sefaria_api_wrapper import SefariaApi
 
@@ -45,7 +43,6 @@ def index(request):
 			# query DB for all q's with <sefer_perek>
 			questions = SourceQuestion.objects.filter(book_chapter_sentence__startswith=sefer_perek)
 			print(questions)
-
 
 			pp = pprint.PrettyPrinter(indent=4)
 			print("**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")

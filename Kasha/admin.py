@@ -3,8 +3,8 @@ from django.contrib import admin
 from .models import Question, SourceQuestion
 
 class QuestionAdmin(admin.ModelAdmin):
-	fields = ['pub_date', 'question_text', 'en_verse_text','he_verse_text','book_source',]
-	list_display = ('question_text', 'pub_date')
+	fields = ['pub_date', 'question_text', 'en_verse_text','he_verse_text','book_source','tags']
+	list_display = ('question_text', 'verses','pub_date')
 admin.site.register(Question, QuestionAdmin)
 
 
