@@ -1,7 +1,9 @@
-
-
 li {
 	list-style-type: none;
+}
+
+tr.clickable-row { 
+	cursor: pointer; 
 }
 
 .table>tbody>tr>td {

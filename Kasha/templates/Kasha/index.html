@@ -4,6 +4,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% block content %}
+{% load kasha_extras %}
 
 {% block header %}
 <link href="{% static 'index.css' %}" rel="stylesheet">
@@ -55,14 +56,16 @@
 
                                   <h2>{{sefer}} {{perek}}</h2>
 
-                                {% if results %}
                                 <table id="table" class="table table-striped">
                                   <tbody>
-                                 {% for pasuk, verse in results.items %}
-                                              <tr class="pasuk-item">
-                                                <!--<th scope="row">{{ pasuk }}</th>-->
+                                 {% for pasuk, verse in chumash_rashi.items %}
+                                                <tr class="clickable-row pasuk-item" data-href='{% url 'kasha:index' %}{{ sefer }}/{{perek}}/{{pasuk}}'>
                                                 <td class="eng-text"><span class="pasuk-num">{{ pasuk }}.</span>{{ verse.en | safe }} </td>
+
                                                 <td dir="rtl" class="heb-text">{{ verse.he }} </td>
+
+                                                <td>{{ verses|keyvalue:pasuk|keyvalue:'num_questions' }}</td>
+                                                
                                               </tr>
                                           {% if verse.rashi.items %}
                                             {% for rashi, r in verse.rashi.items %}
@@ -72,8 +75,9 @@
                                              </tr>
                                             {% endfor %} 
                                             {% endif %}
+                                  {% empty %}
+                                  <p>Shteig</p>
                                   {% endfor %}
-                                {% endif %}
                                    </tbody>
                                 </table>
                               </div>
@@ -140,6 +144,15 @@ $(document).ready(function(){
 
        $('#table').find('.' + language + '-text').removeClass('hidden');
        }
+    });
+});
+
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+      console.log("hello world");
+      console.log($(this).data("href"));
+        window.location = $(this).data("href");
+        console.log(window.location);
     });
 });
 </script>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import GetText
-from .models import Question, SourceQuestion
+from .models import Question, SourceQuestion, BookChapterQuestions
 
 import pprint
 import requests
@@ -14,7 +14,7 @@ def index(request):
 	if request.method == 'POST':
 		form = GetText(request.POST)
 		if form.is_valid():
-			# Results = None properly clears any previous search results
+			# Results = None => properly clears any previous search results
 			results = None
 
 			# form data
@@ -34,25 +34,32 @@ def index(request):
 			s1manager = SefariaApiChumashRashiManager(text)
 			# return collated main text with rashi dictionary
 			# TODO: error checking
-			results = s1manager.getChumashRashi()
+			chumash_rashi = s1manager.getChumashRashi()
 
 			# turn sefer form data to lower case for
 			sefer = sefer.lower()
 			# create sefer_perek string to query db for all questions with specified <sefer_perek>
 			sefer_perek = sefer + "_" + perek
 			# query DB for all q's with <sefer_perek>
-			questions = SourceQuestion.objects.filter(book_chapter_sentence__startswith=sefer_perek)
-			print(questions)
+			book_chapter = BookChapterQuestions.objects.filter(book_name=sefer, chapter=perek)
+			verses = None
+			#print(book_chapter[0].verses)
+			
+			if book_chapter and book_chapter[0].verses:
+				verses = book_chapter[0].verses
 
 			pp = pprint.PrettyPrinter(indent=4)
 			print("**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")
-			#pp.pprint(results)
+			pp.pprint(verses)
+			
+			#print(type(verses))
+			#print(type(chumash_rashi))
+
 			form = GetText()
-			return render(request, 'Kasha/index.html', {'form':form, 'results':results, 'sefer':sefer, 'perek':perek})
+			return render(request, 'Kasha/index.html', {'form':form, 'chumash_rashi':chumash_rashi, 'sefer':sefer, 'perek':perek, 'verses': verses})
 	else:
 		form = GetText()		
 	return render(request, 'Kasha/index.html', {'form':form})
-	#return HttpResponse("Hello, world. You're at the Kasha index.")
 
 def question_list(request, book, chapter, sentence):
 	book = book.lower()

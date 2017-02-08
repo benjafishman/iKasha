@@ -22,8 +22,12 @@ class SourceQuestion(models.Model):
 	book_chapter_sentence = models.CharField(max_length=100)
 	question = models.ForeignKey(Question)
 
-
 class BookChapterQuestions(models.Model):
 	book_name = models.CharField(max_length=100)
 	chapter = models.CharField(max_length=100)
-	question_list =JSONField()	
+	verses = JSONField()
+
+	class Meta:
+		verbose_name = "Book Chapter Questions"
+		verbose_name_plural = "Book Chapter Questions"
+		unique_together = ('book_name', 'chapter',)
