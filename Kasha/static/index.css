@@ -1,7 +1,9 @@
 li {
 	list-style-type: none;
 }
-
+.has-link:hover { 
+	text-decoration: underline;
+}
 tr.clickable-row { 
 	cursor: pointer; 
 }

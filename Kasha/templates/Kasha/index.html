@@ -59,7 +59,7 @@
                                 <table id="table" class="table table-striped">
                                   <tbody>
                                  {% for pasuk, verse in chumash_rashi.items %}
-                                                <tr class="clickable-row pasuk-item" data-href='{% url 'kasha:index' %}{{ sefer }}/{{perek}}/{{pasuk}}'>
+                                                <tr class="has-link clickable-row pasuk-item" data-href='{% url 'kasha:index' %}{{ sefer }}/{{perek}}/{{pasuk}}'>
                                                 <td class="eng-text"><span class="pasuk-num">{{ pasuk }}.</span>{{ verse.en | safe }} </td>
 
                                                 <td dir="rtl" class="heb-text">{{ verse.he }} </td>
@@ -154,6 +154,6 @@ jQuery(document).ready(function($) {
         window.location = $(this).data("href");
         console.log(window.location);
     });
-});
+  });
 </script>
 {% endblock %}

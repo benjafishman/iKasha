@@ -18,7 +18,7 @@
                                  {% for q in questions %}
                                               <tr>
                                                 <td>{{ q.id }}</td>
-                                                <td><a href="{% url 'kasha:question_detail' q.id %}">{{ q.question.question_text }}</a></td>
+                                                <td><a href="{% url 'kasha:question_detail' q.id %}">{{ q.question_text }}</a></td>
                                               </tr>
                                   {% empty %}
                                   <li>Sorry, no questions yet...</li>

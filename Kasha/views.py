@@ -63,8 +63,8 @@ def index(request):
 
 def question_list(request, book, chapter, sentence):
 	book = book.lower()
-	bcs = book + "_" + chapter + "_" + sentence
-	questions = SourceQuestion.objects.filter(book_chapter_sentence=bcs)
+	bcs = book + "." + chapter + "." + sentence
+	questions = Question.objects.filter(verses__overlap=[bcs])
 	return render(request, 'Kasha/questions_list.html', {'questions':questions, 'bcs':bcs})	
 
 def question_detail(request, question_id):
