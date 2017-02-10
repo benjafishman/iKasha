@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField, JSONField
 
+
+
 class Question(models.Model):
 	question_text = models.TextField(max_length=500)
 	pub_date = models.DateTimeField('date published')
@@ -17,6 +19,11 @@ class Question(models.Model):
 		verbose_name = "Question"
 		verbose_name_plural = "Questions"
 
+class Answer(models.Model):
+	answer_text = models.TextField(max_length=500)
+	pub_date = models.DateTimeField('date published')
+	source = models.CharField(null=True, max_length=500, blank=True)
+	question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 class SourceQuestion(models.Model):
 	book_chapter_sentence = models.CharField(max_length=100)
