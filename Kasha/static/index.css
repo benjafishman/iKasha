@@ -38,3 +38,15 @@ tr.clickable-row {
 	font-weight: bold;
 	padding-right: 5px;
 }
+
+.container-fluid {
+	overflow: hidden !important;
+}
+
+.search-results {
+}
+
+.question-builder {
+	background-color: green;
+	width: 31%;
+}

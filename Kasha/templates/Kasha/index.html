@@ -47,18 +47,25 @@
                                   </br>
                                     {% bootstrap_button "Search" button_type="submit" button_class="btn-primary" %}
                                 </form>
-
-                                <div class="search-results">
+                                <!-- start search results -->
 
                                     <input type="button" value="English" class="btnLanguage" data-language="eng" />
                                     <input type="button" value="Both" class="btnLanguage" data-language="both" />
                                    <input type="button" value="Hebrew" class="btnLanguage" data-language="heb" />
+                                   <input type="button" value="Question Builder" class="btnBuilder"/>
 
-                                  <h2>{{sefer}} {{perek}}</h2>
+                                  <h2>{{sefer|title}} {{perek}}</h2>
 
-                                <table id="table" class="table table-striped">
-                                  <tbody>
-                                 {% for pasuk, verse in chumash_rashi.items %}
+
+
+
+                                  <table class="outer-table table-bordered">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <table id="table" class="table table-striped">
+                                            <tbody>
+                                                {% for pasuk, verse in chumash_rashi.items %}
                                                 <tr class="has-link clickable-row pasuk-item" data-href='{% url 'kasha:index' %}{{ sefer }}/{{perek}}/{{pasuk}}'>
                                                 <td class="eng-text"><span class="pasuk-num">{{ pasuk }}.</span>{{ verse.en | safe }} </td>
 
@@ -80,8 +87,17 @@
                                   {% endfor %}
                                    </tbody>
                                 </table>
+                            </td>
+                              <!-- end search results row -->
+                              <!-- start question builder row -->
+                              <td class="question-builder">
+                              <div>
+                                <p>question builder</p>
                               </div>
-
+                              </td>
+                              </tr>
+                                </tbody>
+                                </table>
           </div>
     </div> <!-- /.container -->
 {% endblock content %}
@@ -146,6 +162,18 @@ $(document).ready(function(){
        }
     });
 });
+ 
+$(document).ready(function(){
+    $('.btnBuilder').click(function() {
+      console.log("question builder");
+      idName = 'question-builder'; 
+      $('.question-builder').toggle();
+        /*$('.outer-table').find('.question-builder').addClass("hidden")*/
+      console.log(num)
+
+      });
+    });
+
 
 jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {
