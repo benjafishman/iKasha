@@ -48,6 +48,14 @@ tr.clickable-row {
 
 .question-builder {
 	vertical-align: top;
-	background-color: green;
-	width: 31%;
+	background-color: #222222;
+	width: 30%;
+	color: white;
+	text-align: center;
+}
+
+.form-group {
+	margin: auto;
+	width: 85%;
+	margin-bottom: 5%;
 }

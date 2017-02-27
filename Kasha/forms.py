@@ -56,10 +56,15 @@ class QuestionForm(forms.ModelForm):
 
 class QuestionBuilderForm(forms.Form):
 	question_text = forms.CharField(
-		label = "Kasha",
+		label = "Kasha:",
 		max_length = 80,
 		required = True,
 		widget = forms.Textarea,
+		)
+	sources = forms.CharField(
+		label = "Sources:",
+		max_length = 80,
+		required = True,
 		)
 	def __init__(self, *args, **kwargs):
 		super(QuestionBuilderForm, self).__init__(*args, **kwargs)
@@ -68,6 +73,6 @@ class QuestionBuilderForm(forms.Form):
 		self.helper.form_id = 'id-exampleForm'
 		self.helper.form_class = 'blueForms'
 		self.helper.form_method = 'post'
-		self.helper.form_action = 'submit_survey'
+		self.helper.form_action = '#'
 		self.helper.add_input(Submit('submit', 'Submit'))
 
