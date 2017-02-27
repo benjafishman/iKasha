@@ -10,6 +10,8 @@ class Question(models.Model):
 	en_verse_text = models.TextField(null=True, max_length=500, blank=True)
 	book_source = models.CharField(null=True, max_length=500, blank=True)
 	verses = ArrayField(models.CharField(max_length=200), blank=True)
+	created_at = models.DateTimeField(null=True, auto_now_add=True)
+	updated_at = models.DateTimeField(null=True, auto_now=True)
 
 
 	def __str__(self):

@@ -47,6 +47,7 @@ tr.clickable-row {
 }
 
 .question-builder {
+	vertical-align: top;
 	background-color: green;
 	width: 31%;
 }

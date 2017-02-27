@@ -6,6 +6,9 @@
 {% block content %}
 {% load kasha_extras %}
 
+{% load crispy_forms_tags %}
+
+
 {% block header %}
 <link href="{% static 'index.css' %}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -20,25 +23,25 @@
                                     {% csrf_token %}
                                     <div class="row center-block">
                                       <div class="col-6 col-md-4">
-                                    {{ form.torahType }}
+                                    {{ sefariaAPIForm.torahType }}
                                   </div>
                                   <div class="col-6 col-md-4">
-                                    {{ form.sefer }}
+                                    {{ sefariaAPIForm.sefer }}
                                   </div>
                                   <div class="col-6 col-md-4">
-                                    {{ form.perek }}
+                                    {{ sefariaAPIForm.perek }}
                                   </div>
                                   </div>
 
-                                    {% if form.errors %}
-                                        {% for field in form %}
+                                    {% if sefariaAPIForm.errors %}
+                                        {% for field in sefariaAPIForm %}
                                             {% for error in field.errors %}
                                                 <div class="alert alert-error">
                                                     <strong>{{ error|escape }}</strong>
                                                 </div>
                                             {% endfor %}
                                         {% endfor %}
-                                        {% for error in form.non_field_errors %}
+                                        {% for error in sefariaAPIForm.non_field_errors %}
                                             <div class="alert alert-error">
                                                 <strong>{{ error|escape }}</strong>
                                             </div>
@@ -91,9 +94,15 @@
                               <!-- end search results row -->
                               <!-- start question builder row -->
                               <td class="question-builder">
-                              <div>
-                                <p>question builder</p>
-                              </div>
+                                <h3>Question</h3>
+                                {% crispy question_builder_form question_builder_form.helper %}
+                                <!--
+                                <form action="#" method="POST">
+                                  {% csrf_token %}
+                                          {{ questionForm.question_text }}
+                                          <input type="hidden" name="form-type" value="question-form" /> <!-- set type 
+                                          <input type="submit" value="Submit" />
+                                      </form> -->
                               </td>
                               </tr>
                                 </tbody>
@@ -164,13 +173,13 @@ $(document).ready(function(){
 });
  
 $(document).ready(function(){
+  /*
+  toggles question builder col visible or not via button
+  */
     $('.btnBuilder').click(function() {
       console.log("question builder");
       idName = 'question-builder'; 
       $('.question-builder').toggle();
-        /*$('.outer-table').find('.question-builder').addClass("hidden")*/
-      console.log(num)
-
       });
     });
 
