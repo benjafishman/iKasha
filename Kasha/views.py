@@ -52,10 +52,12 @@ def index(request):
 			pp.pprint(verses)
 	
 			sefariaAPIForm = GetText()
-			return render(request, 'Kasha/index.html', {'sefariaAPIForm':sefariaAPIForm,'chumash_rashi':chumash_rashi, 'sefer':sefer, 'perek':perek, 'verses': verses, 'question_builder_form': QuestionBuilderForm()})
+			#return render(request, 'Kasha/index.html', {'sefariaAPIForm':sefariaAPIForm,'chumash_rashi':chumash_rashi, 'sefer':sefer, 'perek':perek, 'verses': verses, 'question_builder_form': QuestionBuilderForm()})
+			return render(request, 'Kasha/angularTest.html',) 
+
 	else:
 		sefariaAPIForm = GetText()		
-	return render(request, 'Kasha/index.html', {'sefariaAPIForm':sefariaAPIForm, 'question_builder_form': QuestionBuilderForm()})
+	return render(request, 'Kasha/angularTest.html', {'sefariaAPIForm':sefariaAPIForm, 'question_builder_form': QuestionBuilderForm()})
 
 def question_list(request, book, chapter, sentence):
 	book = book.lower()
