@@ -12,22 +12,31 @@
 {% block header %}
 <link href="{% static 'index.css' %}" rel="stylesheet">
 
+
     {% endblock header %}
 
 <div class="container-fluid">
 <br / >
 <br / >
 <br / >
+Sefer: <select id="select-sefer" name="sefer">
+</select>
+Chapter: <select id="select-chapter" name="chapter"></select>
+
+{% bootstrap_button "Search" button_type="submit" button_class="btn-primary" id="search" %}
 {% verbatim %}
-<div ng-app="myApp" ng-controller="myCtrl">
+  <!-- <div ng-app="myApp" ng-controller="myCtrl"> 
+
+    Sefer: <input ng-model="sefer" id="sefer">
+    Chapter: <input ng-model="chapter" id="chapter">
     Name: <input ng-model="firstname">
 
     <h1>{{firstname}}</h1>
-    <h1>{{lastname}}</h1>
+    <h1>{{sefer}}</h1>
 
     <p>The ID is {{greeting.id}}</p>
       <p>The content is {{greeting.content}}</p>
-</div>
+</div>   -->
 {% endverbatim %}
 
 
@@ -38,11 +47,18 @@
 {% block script %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script>
+
+/*
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope) {
     $scope.firstname = "John";
     //$scope.lastname = "Doe";
-
+    base_url = "http://www.sefaria.org/";
+    sefer_url = $scope.sefer;
+    console.log($('#sefer').val())
+    chapter_url = $scope.chapter;
+    console.log(sefer_url);
+    console.log(chapter_url);
 
 
 $.ajax({
@@ -75,13 +91,15 @@ $.ajax({
         $scope.$apply(function () {
         $scope.lastname = hebrew_text;
       });
-/*
+
         $.grep( response, function( n, i ) {
           //console.log(n.commentary.commentator==='Rashi');
-    });*/
+    });
     }
 });
 });
+*/
 
 </script>
+<script type="text/javascript" src="{% static 'js/sefariaApi.js' %}"></script>
 {% endblock %}
