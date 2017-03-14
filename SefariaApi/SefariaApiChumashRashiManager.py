@@ -11,25 +11,25 @@ class SefariaApiChumashRashiManager(object):
 
 	def getRashi(self):
 		# list comprehension to grab all rashi elements from the list of commentaries
-		rashis = [d for d in self.SEFARIA_API_QUERYSET.json()['commentary'] if d['commentator'] == 'Rashi']
+		rashis = [d for d in self.SEFARIA_API_QUERYSET.json()["commentary"] if d["commentator"] == "Rashi"]
 		#print(rashis)
 		rashi_dict = {}
 		# loop through rashis and create JSON elements for each one
 		if rashis:
 			for r in rashis:
 				rashiItem = {
-				'he': r['he'],
-				'en': r['text'],
-				'ref': r['sourceRef']}
+				"he": r["he"],
+				"en": r["text"],
+				"ref": r["sourceRef"]}
 
 				index = 1
-				if not r['anchorVerse'] in rashi_dict:
+				if not r["anchorVerse"] in rashi_dict:
 					index=1
-					rashi_dict[r['anchorVerse']] = {}
+					rashi_dict[r["anchorVerse"]] = {}
 				else:
-					while index in rashi_dict[r['anchorVerse']]:
+					while index in rashi_dict[r["anchorVerse"]]:
 						index+=1
-				rashi_dict[r['anchorVerse']][index] = rashiItem
+				rashi_dict[r["anchorVerse"]][index] = rashiItem
 		return rashi_dict
 
 	def getMainContent(self):
@@ -40,7 +40,7 @@ class SefariaApiChumashRashiManager(object):
 		english_content = self.SEFARIA_API_QUERYSET.json()["text"]
 
 		# put english and hebrew main text in dictionary for return
-		return {'en': english_content, 'he':hebrew_content}
+		return {"en": english_content, "he":hebrew_content}
 
 	def getChumashRashi(self):
 		

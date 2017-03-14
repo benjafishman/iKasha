@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import GetText, QuestionForm, QuestionBuilderForm
 from .models import Question, SourceQuestion, BookChapterQuestions
+from django.core import serializers
 
 import pprint
 import requests
@@ -70,6 +71,23 @@ def question_detail(request, question_id):
 	return render(request, 'Kasha/question_detail.html', {'question':question})
 
 
+def get_text(request, book, chapter):
+	# create the api request suffix
+	api_request_url = book + '.' + chapter
+	# instantiate sefaria api
+	sefariaApi = SefariaApi()
+	# make api request an return results
+	text = sefariaApi.getText(api_request_url)
+	
+	print(text)
 
+	# instantiate chumash manger 
+	s1manager = SefariaApiChumashRashiManager(text)
+	# return collated main text with rashi dictionary
+	# TODO: error checking
+	chumash_rashi = s1manager.getChumashRashi()
+	print(chumash_rashi)
+	return JsonResponse(chumash_rashi, safe=False)
+	
 
 

@@ -19,24 +19,38 @@
 <br / >
 <br / >
 <br / >
-Sefer: <select id="select-sefer" name="sefer">
-</select>
-Chapter: <select id="select-chapter" name="chapter"></select>
-
-{% bootstrap_button "Search" button_type="submit" button_class="btn-primary" id="search" %}
 {% verbatim %}
-  <!-- <div ng-app="myApp" ng-controller="myCtrl"> 
 
-    Sefer: <input ng-model="sefer" id="sefer">
-    Chapter: <input ng-model="chapter" id="chapter">
-    Name: <input ng-model="firstname">
+<div ng-app="myApp" ng-controller="myCtrl"> 
 
-    <h1>{{firstname}}</h1>
+    <select ng-model="selectedChumash" ng-change="showSelectValue(selectedChumash)">
+       <option value=''>Choose</option>
+      <option ng-repeat="x in chumash" value="{{x.book}}">{{x.book}}</option>
+    </select>
+
+    Chapter: <select id="select-chapter" name="chapter"></select>
+    <button ng-click="searchSefariaApi()">Search</button>
+
+    <h1> You have selected: {{ selectedChumash }} </h1>
+
     <h1>{{sefer}}</h1>
+    <h1>{{chapter}}</h1>
 
     <p>The ID is {{greeting.id}}</p>
-      <p>The content is {{greeting.content}}</p>
-</div>   -->
+    <p>The content is {{greeting.content}}</p>
+
+<table id="table" class="table table-striped table-bordered">
+    <tbody>
+        <tr ng-repeat="verse in pasukim">
+          <td class="eng-text">{{ verse.en }}</td>
+          <td dir="rtl" class="heb-text">{{ verse.he }} </td>
+        </tr>
+        <tr ng-repeat="r in verse.rashi">
+          <td>{{ r.en }}</ed>
+        </tr>
+      </tbody>
+</table>
+</div>
 {% endverbatim %}
 
 
@@ -48,58 +62,51 @@ Chapter: <select id="select-chapter" name="chapter"></select>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script>
 
-/*
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
-    $scope.firstname = "John";
-    //$scope.lastname = "Doe";
-    base_url = "http://www.sefaria.org/";
-    sefer_url = $scope.sefer;
-    console.log($('#sefer').val())
-    chapter_url = $scope.chapter;
-    console.log(sefer_url);
-    console.log(chapter_url);
+app.controller('myCtrl', function($scope, $http) {
+
+  $scope.chumash = [
+        {book : "Genesis", chapters : 51},
+        {book : "Exodus", chapters : 41},
+        {book : "Leviticus", chapters :28 },
+        {book : "Numbers", chapters : 37},
+        {book : "Deuteronomy", chapters : 35},
+    ];
+
+ $scope.chumashPerakim = {
+  'Genesis': 51,
+  'Exodus': 41,
+  'Leviticus': 28,
+  'Numbers': 37,
+  'Deuteronomy': 35
+}
 
 
-$.ajax({
-    url: "http://www.sefaria.org/api/texts/Genesis.1",
- 
-    // The name of the callback parameter, as specified by the YQL service
-    jsonp: "callback",
- 
-    // Tell jQuery we're expecting JSONP
-    dataType: "jsonp",
- 
-    // Work with the response
-    success: function( response) {
+    $scope.selectedChumash = ""
 
-        console.log( response ); // server response  
-          
-        var str = JSON.stringify(response['he'], null, 2); // spacing level = 
+    $scope.showSelectValue = function(mySelect) {
+              console.log(mySelect);
+              $scope.selectedChumash = mySelect;
+              console.log($scope.chumashPerakim[mySelect]);
+              var chapters = "";
+                for (i = 1; i < $scope.chumashPerakim[mySelect]; i++) {
+                          chapters += "<option>" + i + "</option>";
+                        }
+                        document.getElementById("select-chapter").innerHTML = chapters;
+      }
+    
+  $scope.searchSefariaApi = function(){
+    var selectedChapter= $('#select-chapter').find(":selected").text();
+    var url = $scope.selectedChumash + "/" + selectedChapter;
 
-        var hebrew_text = JSON.stringify(response['he'], null, 2); 
-
-        var english_text = JSON.stringify(response['text'], null, 2); 
-
-        console.log( hebrew_text ); // server response
-
-        console.log( english_text ); // server response
-
-        //var commentary = JSON.stringify(response['commentary'], null, 2); 
-
-        //console.log( commentary ); // server response
-        $scope.$apply(function () {
-        $scope.lastname = hebrew_text;
-      });
-
-        $.grep( response, function( n, i ) {
-          //console.log(n.commentary.commentator==='Rashi');
-    });
-    }
+    console.log(url);
+    $http.get(url)
+    .then(function (response) {$scope.pasukim = response.data;});
+    console.log($scope.pasukim);
+  };
+  
 });
-});
-*/
 
 </script>
-<script type="text/javascript" src="{% static 'js/sefariaApi.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/sefariaApi.js' %}"></scrip> -->t
 {% endblock %}
