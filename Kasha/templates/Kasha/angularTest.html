@@ -40,13 +40,14 @@
     <p>The content is {{greeting.content}}</p>
 
 <table id="table" class="table table-striped table-bordered">
-    <tbody>
-        <tr ng-repeat="verse in pasukim">
+    <tbody ng-repeat="verse in pasukim" ng-bind-html="pasukim">
+        <tr>
           <td class="eng-text">{{ verse.en }}</td>
           <td dir="rtl" class="heb-text">{{ verse.he }} </td>
         </tr>
-        <tr ng-repeat="r in verse.rashi">
-          <td>{{ r.en }}</ed>
+        <tr class="rashi-item" ng-repeat="r in verse.rashi">
+          <td class="eng-text eng-rashi"> {{ r.en }}</td>
+          <td dir="rtl" class="heb-text heb-rashi"> {{ r.he }}</td>
         </tr>
       </tbody>
 </table>
@@ -63,7 +64,7 @@
 <script>
 
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope, $http) {
+app.controller('myCtrl', function($scope, $http, $sce) {
 
   $scope.chumash = [
         {book : "Genesis", chapters : 51},
@@ -101,12 +102,12 @@ app.controller('myCtrl', function($scope, $http) {
 
     console.log(url);
     $http.get(url)
-    .then(function (response) {$scope.pasukim = response.data;});
+    .then(function (response) {$scope.pasukim = $sce.trustAsHtml(response.data);});
     console.log($scope.pasukim);
   };
   
 });
 
 </script>
-<!--<script type="text/javascript" src="{% static 'js/sefariaApi.js' %}"></scrip> -->t
+<!--<script type="text/javascript" src="{% static 'js/sefariaApi.js' %}"></scrip> -->
 {% endblock %}

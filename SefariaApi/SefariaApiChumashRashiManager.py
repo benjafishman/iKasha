@@ -63,7 +63,7 @@ class SefariaApiChumashRashiManager(object):
 		for pasuk in main_content["en"]:
 						
 			# Set rashi from the rashi dictionary but default to None
-			rashi = None
+			rashi = []
 			if pasukNum in rashi_dict:
 					rashi = rashi_dict[pasukNum]
 						
