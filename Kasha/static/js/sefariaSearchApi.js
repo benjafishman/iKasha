@@ -2,11 +2,11 @@ var app = angular.module('sefariaSearchApp', []);
 app.controller('sefariaSearchApiCtrl', function($scope, $http) {
 
   $scope.chumash = [
-        {book : "Genesis", chapters : 51},
-        {book : "Exodus", chapters : 41},
-        {book : "Leviticus", chapters :28 },
-        {book : "Numbers", chapters : 37},
-        {book : "Deuteronomy", chapters : 35},
+        {en_book : "Genesis", chapters : 51},
+        {en_book : "Exodus", chapters : 41},
+        {en_book : "Leviticus", chapters :28 },
+        {en_book : "Numbers", chapters : 37},
+        {en_book : "Deuteronomy", chapters : 35},
     ];
 
  $scope.chumashPerakim = {
@@ -20,20 +20,25 @@ app.controller('sefariaSearchApiCtrl', function($scope, $http) {
 
     $scope.selectedChumash = ""
 
+
     $scope.showSelectValue = function(mySelect) {
               console.log(mySelect);
               $scope.selectedChumash = mySelect;
               console.log($scope.chumashPerakim[mySelect]);
               var chapters = "";
-                for (i = 1; i < $scope.chumashPerakim[mySelect]; i++) {
+              for (i = 1; i < $scope.chumashPerakim[mySelect]; i++) {
                           chapters += "<option>" + i + "</option>";
-                        }
-                        document.getElementById("select-chapter").innerHTML = chapters;
+              };
+                        
+            document.getElementById("select-chapter").innerHTML = chapters;
+            $("#select-chapter").val("1");
+            $scope.selectedChapter = 1;
+
       }
     
   $scope.searchSefariaApi = function(){
-    var selectedChapter= $('#select-chapter').find(":selected").text();
-    var url = $scope.selectedChumash + "/" + selectedChapter;
+    $scope.selectedChapter = $('#select-chapter').find(":selected").text();
+    var url = $scope.selectedChumash + "/" + $scope.selectedChapter;
 
     console.log(url);
     $http.get(url)

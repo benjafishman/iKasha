@@ -18,21 +18,17 @@
 {% verbatim %}
 
 <div ng-app="sefariaSearchApp" ng-controller="sefariaSearchApiCtrl"> 
-
-    <select ng-model="selectedChumash" ng-change="showSelectValue(selectedChumash)">
+<div>
+    Sefer: <select ng-model="selectedChumash" ng-change="showSelectValue(selectedChumash)">
        <option value="">Choose</option>
-      <option ng-repeat="x in chumash" value="{{x.book}}">{{x.book}}</option>
+      <option ng-repeat="x in chumash" value="{{x.en_book}}">{{x.en_book}}</option>
     </select>
-
-    Chapter: <select ng-model="selectedChapter"  id="select-chapter" name="chapter">
+    Chapter: <select ng-model="selectedChapter" id="select-chapter" name="chapter">
+    <option value="">--Select --</option>
     </select>
     <button ng-click="searchSefariaApi()">Search</button>
-
+</div>
     <h1> {{ selectedChumash }} {{ selectedChapter }} </h1>
-
-    <h1>{{sefer}}</h1>
-    <h1>{{chapter}}</h1>
-
 
 <table id="table" class="table table-striped table-bordered">
     <tbody ng-repeat="verse in pasukim" >
